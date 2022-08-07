@@ -10,7 +10,7 @@ class EntryLists extends StatefulWidget {
 // code citation: convert dateTime object to string
 // https://stackoverflow.com/questions/51579546/how-to-format-datetime-in-flutter
 class _EntryListsState extends State<EntryLists> {
-  DateFormat dateFormat = DateFormat('MMMM-dd-yyyy kk:mm');
+  DateFormat dateFormat = DateFormat('EEEE, MMMM, yyyy');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
