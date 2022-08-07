@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
-import 'entry_lists.dart';
+import 'screens/entry_lists.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:wasteagram/screens/waste_detail_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(App(title: 'Location Services'));
+  runApp(App());
 }
 
-class App extends StatelessWidget {
-  final String title;
+class App extends StatefulWidget {
+  
 
-  const App({Key? key, required this.title}) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
+  @override
+  State<App> createState() => AppState();
+
+  static AppState of(BuildContext context) => context.findAncestorStateOfType<AppState>()!;
+  static final routes = {
+    WasteDetailScreen.routeName: (context) => WasteDetailScreen(),
+  };
+}
+
+class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,6 +34,9 @@ class App extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        themeMode: ThemeMode.dark,
+        darkTheme: ThemeData.dark(),
+        routes: App.routes,
         home: Scaffold(body: EntryLists()));
   }
 }
