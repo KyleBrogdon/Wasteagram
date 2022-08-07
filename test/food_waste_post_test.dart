@@ -1,6 +1,7 @@
 import 'package:test/test.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
 
+
 void main() {
   test("post created from map", () {
     final date = DateTime.tryParse('2020-01-01');
@@ -8,7 +9,6 @@ void main() {
     const quantity = 1;
     const latitude = 1.0;
     const longitude = 20.0;
-
     final food_waste_post = FoodWastePost.fromMap({
       'date': date,
       'url': url,

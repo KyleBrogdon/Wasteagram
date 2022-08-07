@@ -12,10 +12,29 @@ class WasteDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments;
     print(args);
-    return Scaffold(appBar: AppBar(title: Text('Wasteagram')), body: layout());
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Wasteagram'),
+          centerTitle: true,
+        ),
+        body: layout(args));
   }
 
-  Widget layout() {
-    return Column(children: [Text('todo'), SizedBox(height: 20), Placeholder()]);
+  Widget layout(args) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Column(children: [
+        Text(
+          args.date,
+          style: TextStyle(fontSize: 24),
+        ),
+        SizedBox(height: 20),
+        Placeholder(),
+        SizedBox(height: 20),
+        Text('Quantity: ${args.quantity}', style: TextStyle(fontSize: 20)),
+        SizedBox(height: 20),
+        Text('(${args.latitude}, ${args.longitude})', style: TextStyle(fontSize: 20)),
+      ]),
+    );
   }
 }

@@ -14,11 +14,14 @@ class EntryLists extends StatefulWidget {
 // code citation: convert dateTime object to string
 // https://stackoverflow.com/questions/51579546/how-to-format-datetime-in-flutter
 class _EntryListsState extends State<EntryLists> {
-  DateFormat dateFormat = DateFormat('EEEE, MMMM, yyyy');
+  DateFormat dateFormat = DateFormat('EEEE, MMMM d, yyyy');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Wastegram'), centerTitle: true,),
+      appBar: AppBar(
+        title: Text('Wastegram'),
+        centerTitle: true,
+      ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('posts').snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -28,12 +31,22 @@ class _EntryListsState extends State<EntryLists> {
                   itemBuilder: (context, index) {
                     var count = snapshot.data!.docs.length;
                     var post = snapshot.data!.docs[count - 1 - index];
+                    FoodWastePost entry = FoodWastePost(
+                      date: dateFormat.format(post['date'].toDate()), url: 'fakeurl', quantity: post['quantity'].toString(), latitude: post['latitude'].toString(), longitude: post['longitude'].toString() 
+                    );
                     return ListTile(
-                      title: Text(dateFormat.format(post['submission_date'].toDate()), style: TextStyle(fontSize: 20),),
-                      subtitle: Text(post['weight'].toString(), textAlign: TextAlign.right, style: TextStyle(fontSize: 18),),
+                      title: Text(
+                        entry.date,
+                        style: TextStyle(fontSize: 26),
+                      ),
+                      subtitle: Text(
+                        entry.quantity,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(fontSize: 26),
+                      ),
                       onTap: () {
                         Navigator.pushNamed(context, WasteDetailScreen.routeName,
-                            arguments: post['submission_date']);
+                            arguments: entry);
                       },
                     );
                   });
@@ -59,7 +72,7 @@ class NewEntryButton extends StatelessWidget {
         onPressed: () {
           FirebaseFirestore.instance
               .collection('posts')
-              .add({'submission_date': DateTime.now(), 'weight': 100});
+              .add({'date': DateTime.now(), 'quantity': 100, 'url': 'test', 'latitude': '72.00', 'longitude': '55.00'});
         });
   }
 }
