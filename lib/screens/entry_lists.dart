@@ -39,7 +39,7 @@ class _EntryListsState extends State<EntryLists> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     var count = snapshot.data!.docs.length;
-                    var post = snapshot.data!.docs[count - 1 - index];
+                    var post = snapshot.data!.docs[count - index - 1];
                     FoodWastePost entry = FoodWastePost(
                         date: dateFormat.format(post['date'].toDate()),
                         url: post['url'],

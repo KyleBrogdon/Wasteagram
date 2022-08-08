@@ -14,6 +14,7 @@ import 'package:wasteagram/models/food_waste_post.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:location/location.dart';
 
 class NewEntryScreen extends StatefulWidget {
   const NewEntryScreen({Key? key}) : super(key: key);
@@ -122,10 +123,17 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   // }
 }
 
+Future<LocationData> retrieveLocation() async {
+  var locationService = Location();
+  LocationData locationData = await locationService.getLocation();
+  return locationData;
+}
+
 Future<void> uploadData(fwDTO) async {
+  LocationData location = await retrieveLocation();
   fwDTO.date = DateTime.now();
-  fwDTO.latitude = 0.0;
-  fwDTO.longitude = 0.0;
+  fwDTO.latitude = location.latitude;
+  fwDTO.longitude = location.longitude;
   FirebaseFirestore.instance.collection('posts').add({
     'date': fwDTO.date,
     'quantity': fwDTO.quantity,
