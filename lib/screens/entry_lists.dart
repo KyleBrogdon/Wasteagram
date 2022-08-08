@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:wasteagram/screens/camera_screen.dart';
 import 'package:wasteagram/screens/new_entry_screen.dart';
 import 'package:wasteagram/screens/waste_detail_screen.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
@@ -46,19 +45,22 @@ class _EntryListsState extends State<EntryLists> {
                         quantity: post['quantity'].toString(),
                         latitude: post['latitude'].toString(),
                         longitude: post['longitude'].toString());
-                    return ListTile(
-                      title: Text(
-                        entry.date,
-                        style: TextStyle(fontSize: 26),
+                    return Semantics(
+                      label: 'list tile and on click',
+                      child: ListTile(
+                        title: Text(
+                          entry.date,
+                          style: TextStyle(fontSize: 26),
+                        ),
+                        subtitle: Text(
+                          entry.quantity,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(fontSize: 26),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, WasteDetailScreen.routeName, arguments: entry);
+                        },
                       ),
-                      subtitle: Text(
-                        entry.quantity,
-                        textAlign: TextAlign.right,
-                        style: TextStyle(fontSize: 26),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, WasteDetailScreen.routeName, arguments: entry);
-                      },
                     );
                   });
             } else {
@@ -103,35 +105,37 @@ class NewEntryButton extends StatelessWidget {
   var url;
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-        child: Icon(Icons.camera_enhance_outlined),
-        onPressed: () async {
-          await showCupertinoModalPopup(
-              context: context,
-              builder: (context) => CupertinoActionSheet(
-                    actions: [
-                      CupertinoActionSheetAction(
-                          onPressed: () async {
-                            url = await getImageCamera();
-                            Navigator.pushNamed(context, NewEntryScreen.routeName, arguments: url);
-                          },
-                          child: Text('Select from Camera')),
-                      CupertinoActionSheetAction(
-                          onPressed: () async {
-                            url = await getImageGallery();
-                            Navigator.pushNamed(context, NewEntryScreen.routeName, arguments: url);
-                          },
-                          child: Text('Select from Gallery'))
-                    ],
-                    cancelButton: CupertinoActionSheetAction(
-                      child: Text('Cancel'),
-                      onPressed: () => {Navigator.pop(context)},
-                    ),
-                  ));
-          // Navigator.pushNamed(context, CameraScreen.routeName);
-          // FirebaseFirestore.instance
-          //     .collection('posts')
-          //     .add({'date': DateTime.now(), 'quantity': 100, 'url': 'test', 'latitude': '72.00', 'longitude': '55.00'});;
-        });
+    return Semantics(
+      child: FloatingActionButton(
+          child: Icon(Icons.camera_enhance_outlined),
+          onPressed: () async {
+            await showCupertinoModalPopup(
+                context: context,
+                builder: (context) => CupertinoActionSheet(
+                      actions: [
+                        CupertinoActionSheetAction(
+                            onPressed: () async {
+                              url = await getImageCamera();
+                              Navigator.pushNamed(context, NewEntryScreen.routeName, arguments: url);
+                            },
+                            child: Text('Select from Camera')),
+                        CupertinoActionSheetAction(
+                            onPressed: () async {
+                              url = await getImageGallery();
+                              Navigator.pushNamed(context, NewEntryScreen.routeName, arguments: url);
+                            },
+                            child: Text('Select from Gallery'))
+                      ],
+                      cancelButton: CupertinoActionSheetAction(
+                        child: Text('Cancel'),
+                        onPressed: () => {Navigator.pop(context)},
+                      ),
+                    ));
+            // Navigator.pushNamed(context, CameraScreen.routeName);
+            // FirebaseFirestore.instance
+            //     .collection('posts')
+            //     .add({'date': DateTime.now(), 'quantity': 100, 'url': 'test', 'latitude': '72.00', 'longitude': '55.00'});;
+          }),
+    );
   }
 }

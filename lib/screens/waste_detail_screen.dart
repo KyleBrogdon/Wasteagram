@@ -40,7 +40,7 @@ class WasteDetailScreen extends StatelessWidget {
               ),
             ),
         SizedBox(height: 20),
-        Text('Quantity: ${args.quantity}', style: TextStyle(fontSize: 20)),
+        Text('${args.quantity} items', style: TextStyle(fontSize: 20)),
         SizedBox(height: 20),
         Text('(${args.latitude}, ${args.longitude})', style: TextStyle(fontSize: 20)),
       ]),

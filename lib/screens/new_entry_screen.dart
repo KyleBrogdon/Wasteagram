@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:wasteagram/models/food_waste_DTO.dart';
-import 'package:wasteagram/screens/camera_screen.dart';
 import 'package:wasteagram/screens/entry_lists.dart';
 import 'package:wasteagram/screens/new_entry_screen.dart';
 import 'package:wasteagram/screens/waste_detail_screen.dart';
@@ -54,35 +53,42 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
             SizedBox(height: 10),
             Form(
                 key: formKey,
-                child: TextFormField(
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
-                  autofocus: true,
-                  decoration: InputDecoration(
-                      labelText: 'Please enter the quantity of food', border: OutlineInputBorder()),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter the quantity';
-                    } else {
-                      fwDTO.quantity = int.parse(value);
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    print('value is $value');
-                    fwDTO.quantity = int.parse(value!);
-                  },
+                child: Semantics(
+                  label: 'Quantity entry for new post',
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    autofocus: false,
+                    decoration: InputDecoration(
+                        labelText: 'Please enter the quantity of food', border: OutlineInputBorder()),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter the quantity';
+                      } else {
+                        fwDTO.quantity = int.parse(value);
+                        return null;
+                      }
+                    },
+                    onSaved: (value) {
+                      print('value is $value');
+                      fwDTO.quantity = int.parse(value!);
+                    },
+                  ),
                 )),
             SizedBox(height: 20),
           ]),
         ),
-        floatingActionButton: ElevatedButton(
-            child: Text('Upload your entry'),
-            onPressed: () async {
-              if (formKey.currentState!.validate()) {
-                await uploadData(fwDTO);
-                Navigator.pushReplacementNamed(context, EntryLists.routeName);
-              }
-            }));
+        floatingActionButton: Semantics(
+          label: "Upload to Firebase button",
+          child: ElevatedButton(
+              child: Text('Upload your entry'),
+              onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  await uploadData(fwDTO);
+                  Navigator.pushReplacementNamed(context, EntryLists.routeName);
+                }
+              }),
+        ));
   }
 
   // Widget layout(context) {
