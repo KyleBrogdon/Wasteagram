@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
 
@@ -29,7 +30,15 @@ class WasteDetailScreen extends StatelessWidget {
           style: TextStyle(fontSize: 24),
         ),
         SizedBox(height: 20),
-        Placeholder(),
+        SizedBox(
+              height: 200,
+              width: 400,
+              child: CachedNetworkImage(
+                imageUrl: args.url,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+            ),
         SizedBox(height: 20),
         Text('Quantity: ${args.quantity}', style: TextStyle(fontSize: 20)),
         SizedBox(height: 20),

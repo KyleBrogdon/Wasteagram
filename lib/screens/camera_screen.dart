@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
+  static const routeName = 'cameraScreen';
   _CameraScreenState createState() => _CameraScreenState();
 }
 

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:wasteagram/screens/waste_detail_screen.dart';
+import 'package:wasteagram/screens/new_entry_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,8 @@ class App extends StatefulWidget {
   static AppState of(BuildContext context) => context.findAncestorStateOfType<AppState>()!;
   static final routes = {
     WasteDetailScreen.routeName: (context) => WasteDetailScreen(),
+    EntryLists.routeName: (context) => EntryLists(),
+    NewEntryScreen.routeName: (context) => NewEntryScreen(),
   };
 }
 
