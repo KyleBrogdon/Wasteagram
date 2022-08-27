@@ -1,6 +1,6 @@
 # Wasteagram
 
-A simple clone of "Instagram", Wastegram allows users to post food that is going to waste so it can be redirected to a good use. 
+A simple clone of "Instagram", Wastegram allows users to post food that is going to waste so it can be redirected to a good use. Utilizies built-in system functions for the camera, gallery, and location, as well as integrates with Google Firebase and Cloud Firestore for persistence across devices and platforms. Crash reporting and usage anayltics provided by Sentry and Firebase Analytics.
 
 ## Getting Started
 
