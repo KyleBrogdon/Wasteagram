@@ -24,6 +24,8 @@ A simple clone of "Instagram", Wastegram allows users to post food that is going
 
 ![alt-text](https://media.giphy.com/media/RwwTKMnkUF11mEqdr1/giphy.gif)
 
+Users can click the floating action button at the bottom to access device onboard camera or gallery, after requesting permission from the user. Upon selecting a photo, the user can click the add button to add the post to the server. The location of the post is also uploaded automatically, so location services are requested by the user. Photo and data is then uploaded to Google Cloud Firebstore and Google Firebase to sync across devices and platforms.
+
 ## Built With
 - Dart
 - Flutter
